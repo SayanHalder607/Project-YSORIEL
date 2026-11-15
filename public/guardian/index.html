@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbital Guardian — Space Debris Removal Simulator</title>
+  <link rel="stylesheet" href="guardian.css">
+</head>
+<body>
+
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="logo">🛰️</div>
+        <div>
+          <h1>ORBITAL GUARDIAN</h1>
+          <p>Space Debris Removal Simulator</p>
+        </div>
+      </div>
+      <div class="status">
+        <span class="pill">MISSION <strong id="ui-mission">01</strong></span>
+        <span class="pill">CREDITS <strong id="ui-credits">120</strong></span>
+        <span class="pill">REP <strong id="ui-rep">0</strong></span>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- Main View -->
+      <section class="panel">
+        <div class="panelhead">
+          <h2>Earth Orbit Operations</h2>
+          <div class="tabs">
+            <button class="active" data-view="orbit">Orbit view</button>
+            <button data-view="risk">Risk map</button>
+            <button data-view="altitude">Altitude</button>
+          </div>
+        </div>
+        <div class="canvasbox" id="canvas-wrapper">
+          <canvas id="space" width="900" height="620" aria-label="Orbital debris visualization"></canvas>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background:#55e6ff"></i>Active satellite</span>
+          <span><i class="dot" style="background:#ff6b7a"></i>Debris target</span>
+          <span><i class="dot" style="background:#ffd166"></i>Your tug</span>
+          <span><i class="dot" style="background:#70f0b1"></i>Cleared</span>
+        </div>
+      </section>
+
+      <!-- Mission Control -->
+      <aside class="panel">
+        <div class="panelhead">
+          <h2>Mission Control</h2>
+          <span class="tag med" id="ui-phase">PLANNING</span>
+        </div>
+        <div class="panelbody">
+          <div class="statgrid">
+            <div class="stat"><small>Fuel</small><strong id="ui-fuel">100<span class="unit">%</span></strong></div>
+            <div class="stat"><small>Hull</small><strong id="ui-hull">100<span class="unit">%</span></strong></div>
+            <div class="stat"><small>Cleared</small><strong id="ui-cleared">0<span class="unit">/5</span></strong></div>
+          </div>
+
+          <div class="sectiontitle">Select Target</div>
+          <div class="targetlist" id="ui-targets"></div>
+
+          <div class="actions">
+            <button class="btn-primary" id="btn-launch">Launch Approach</button>
+            <button id="btn-upgrade">Upgrade (60cr)</button>
+            <button id="btn-refuel">Refuel (30cr)</button>
+          </div>
+
+          <div class="sectiontitle">Spacecraft Systems</div>
+          <div class="barrow"><span>Navigation</span><div class="bar"><span id="ui-nav-bar" style="width:72%"></span></div><b id="ui-nav-val">72%</b></div>
+          <div class="barrow"><span>Capture Arm</span><div class="bar"><span id="ui-arm-bar" style="width:60%"></span></div><b id="ui-arm-val">60%</b></div>
+          
+          <div class="sectiontitle" style="margin-top:20px;">Mission Log</div>
+          <div class="log" id="ui-log"></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Bottom Info Panels -->
+    <div class="bottomgrid">
+      <section class="panel">
+        <div class="panelhead"><h2>Objectives</h2></div>
+        <div class="panelbody" id="ui-objectives"></div>
+      </section>
+      <section class="panel">
+        <div class="panelhead"><h2>Flight Manual</h2></div>
+        <div class="panelbody">
+          <div class="missioncard">
+            <h3>01 · Plan</h3>
+            <p>Select debris. Larger objects award more credits but cost more fuel to approach.</p>
+            <h3>02 · Approach</h3>
+            <p>Launch an approach. Spend fuel to reach the target's orbit.</p>
+            <h3>03 · Capture</h3>
+            <p>Stop the moving indicator inside the green zone. Spacebar or the button works.</p>
+            <h3>04 · Improve</h3>
+            <p>Spend credits on upgrades and repairs. Clear all 5 targets to win.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Capture Mini-Game Modal -->
+  <div class="modal-overlay" id="modal-capture">
+    <div class="modal-box">
+      <h2 id="capture-title">Capture Window</h2>
+      <p>Match the capture arm timing. Press <b>SPACE</b> or click FIRE when the marker is inside the green zone.</p>
+      
+      <div class="meter-container">
+        <div class="green-zone" id="capture-zone"></div>
+        <div class="meter-cursor" id="capture-cursor" style="left: 0%;"></div>
+      </div>
+      
+      <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:20px;">
+        <span>ALIGNMENT</span>
+        <span id="capture-status">WAITING...</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" id="fireBtn" style="grid-column: 1 / -1;">FIRE CAPTURE ARM</button>
+        <button id="abortBtn" style="grid-column: 1 / -1;">Abort Approach</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div class="modal-overlay" id="modal-gameover">
+    <div class="modal-box" style="text-align: center;">
+      <h2 id="go-title" style="font-size: 28px; margin-bottom: 12px;">Mission Complete</h2>
+      <p id="go-desc">All targets cleared. The orbital environment is secure.</p>
+      
+      <div class="statgrid" style="margin: 24px 0;">
+        <div class="stat"><small>Credits</small><strong id="go-credits">0</strong></div>
+        <div class="stat"><small>Reputation</small><strong id="go-rep">0</strong></div>
+        <div class="stat"><small>Hull</small><strong id="go-hull">0%</strong></div>
+      </div>
+
+      <button class="btn-primary" id="btn-restart" style="width: 100%; padding: 14px;">Restart Mission</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="guardian.js"></script>
+</body>
+</html>

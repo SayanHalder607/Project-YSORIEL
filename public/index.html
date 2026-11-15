@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project Ysoriel — Space Mission Design Game</title>
+<meta name="description" content="Design, manage and simulate a complete space mission, then keep Earth orbit safe. Two connected simulations in one platform.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/hub.css">
+</head>
+<body>
+<header class="top">
+ <button class="brand" id="home" aria-label="Project Ysoriel overview"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#0b1a36" stroke="#2f7bff" stroke-width="1.5"/><ellipse cx="20" cy="20" rx="16" ry="6.5" transform="rotate(-25 20 20)" fill="none" stroke="#5fd8ff" stroke-width="1.4"/><circle cx="20" cy="20" r="7" fill="#2f7bff"/><circle cx="31.5" cy="14.2" r="2.4" fill="#ffd166"/></svg><span><h1>PROJECT YSORIEL</h1><p>Space Mission Design Game</p></span></button>
+ <nav role="tablist" aria-label="Modules">
+  <button role="tab" id="t-overview" data-v="overview" aria-selected="true" aria-controls="overview">Overview</button>
+  <button role="tab" id="t-studio" data-v="studio" aria-selected="false" aria-controls="studio">Mission Design Studio</button>
+  <button role="tab" id="t-guardian" data-v="guardian" aria-selected="false" aria-controls="guardian">Orbital Guardian</button>
+ </nav>
+</header>
+<main>
+ <section class="view" id="overview" role="tabpanel" aria-labelledby="t-overview">
+  <div class="in">
+   <div class="hero">
+    <div class="eyebrow">Space Mission Design Game</div>
+    <h2>Challenge: design, fly and protect a space mission</h2>
+    <p>Designing a space mission means weighing competing demands: objectives, spacecraft design, instruments, launch vehicles, budgets, power, mass, communications and orbital constraints. Project Ysoriel turns those abstract trade-offs into two connected simulations, so you can make engineering decisions, manage limited resources and see how each choice shapes mission success.</p>
+   </div>
+   <div class="mods">
+    <article class="mod">
+     <span class="tag">MODULE 1 · DESIGN</span>
+     <h3>Mission Design Studio</h3>
+     <p>Take a mission from concept to operations. Build the spacecraft, then fly it.</p>
+     <ul><li>Three missions: Earth, Moon and Mars</li><li>Launch vehicle, bus, propulsion, power, comms and instruments</li><li>Live budget, mass, power, delta-v and data checks</li><li>Animated flight with a graded debrief</li></ul>
+     <button class="go" data-v="studio">Open the Studio</button>
+    </article>
+    <article class="mod">
+     <span class="tag">MODULE 2 · OPERATE</span>
+     <h3>Orbital Guardian</h3>
+     <p>Run a debris-removal tug in a crowded orbit and manage fuel, risk and reputation.</p>
+     <ul><li>Five catalogued debris targets with different risk and cost</li><li>Plan approaches, spend fuel and time your capture</li><li>Upgrade your tug with earned credits</li><li>Orbit, risk and altitude views</li></ul>
+     <button class="go" data-v="guardian">Open Orbital Guardian</button>
+    </article>
+   </div>
+   <div class="flow" aria-label="How the modules connect"><b>Design</b>→<b>Launch</b>→<b>Operate</b>→<b>Protect orbit</b><span>Build a mission in the Studio, then see the orbital environment it operates in.</span></div>
+   <div class="stats">
+    <div class="stat"><strong>3</strong><span>Missions to design</span></div>
+    <div class="stat"><strong>20+</strong><span>Hardware options</span></div>
+    <div class="stat"><strong>5</strong><span>Debris targets</span></div>
+    <div class="stat"><strong>9</strong><span>Constraints balanced</span></div>
+   </div>
+   <section class="board" id="board" hidden aria-label="Top flights">
+    <h3>Top flights</h3>
+    <p class="muted" id="boardEmpty">No flights recorded yet. Complete a mission in the Studio to appear here.</p>
+    <table id="boardTable" hidden><thead><tr><th>#</th><th>Mission</th><th>Score</th><th>Date</th></tr></thead><tbody></tbody></table>
+   </section>
+  </div>
+ </section>
+ <section class="view" id="studio" role="tabpanel" aria-labelledby="t-studio" hidden></section>
+ <section class="view" id="guardian" role="tabpanel" aria-labelledby="t-guardian" hidden></section>
+</main>
+<footer>Project Ysoriel · Educational simulations. Values are simplified and illustrative, not real mission guidance.</footer>
+<script src="js/hub.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+node_modules/
+data/scores.json
+data/scores.json.tmp
+.DS_Store

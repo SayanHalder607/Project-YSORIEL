@@ -1,0 +1,37 @@
+{
+  "name": "project-ysoriel",
+  "version": "1.0.0",
+  "description": "Space Mission Design Game: an interactive mission design studio and orbital debris-removal simulator.",
+  "author": "Sayan Halder <sayanhalder607@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SayanHalder607/Project-YSORIEL.git"
+  },
+  "homepage": "https://github.com/SayanHalder607/Project-YSORIEL#readme",
+  "bugs": {
+    "url": "https://github.com/SayanHalder607/Project-YSORIEL/issues"
+  },
+  "license": "MIT",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node scripts/check.js",
+    "test": "node scripts/check.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "space",
+    "mission-design",
+    "aerospace",
+    "orbital-mechanics",
+    "simulation",
+    "kessler-syndrome",
+    "debris-removal",
+    "educational-game",
+    "vanilla-js",
+    "zero-dependency"
+  ]
+}
